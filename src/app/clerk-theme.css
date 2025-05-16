@@ -1,0 +1,37 @@
+/* .custom-sign-in-card {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 0.375rem;
+}
+
+.custom-sign-in-card::before {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1rem;
+  background-image: url('/cpu-logo.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.custom-header-title::before {
+  content: 'Class Unity';
+  display: block;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.custom-header-subtitle::before {
+  content: 'Sign In';
+  display: block;
+  color: #9CA3AF;
+  margin-bottom: 1rem;
+} */
+
+/* Hide Clerk's development footer */
+/* .cl-footer {
+  display: none !important;
+} */

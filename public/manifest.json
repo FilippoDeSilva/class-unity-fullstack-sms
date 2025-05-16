@@ -1,0 +1,73 @@
+{
+  "name": "Class-Unity School Management System",
+  "short_name": "Class-Unity",
+  "description": "Next.js School Management System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#000000",
+  "offline_enabled": true,
+  "orientation": "any",
+  "meta": {
+    "mobile-web-app-capable": "yes"
+  },
+  "icons": [
+    {
+      "src": "/icons/cpu-logo-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/cpu-logo-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/cpu-logo-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/cpu-logo-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/cpu-logo-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/cpu-logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/cpu-logo-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/cpu-logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "Class-Unity | Login",
+      "url": "/",
+      "icons": [{ "src": "/icons/cpu-logo-96.png", "sizes": "any" }]
+    }
+  ],
+  "firefox_apk_package_id": "com.classunity.app"
+} 

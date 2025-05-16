@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  username String @unique
+}
+
+model Student {
+  id           String     @id @default(cuid())
+  username     String     @unique
+  name         String
+  surname      String
+  email        String?    @unique
+  phone        String?    @unique
+  address      String
+  img          String?
+  sex          UserSex
+  createdAt    DateTime   @default(now())
+  classId      Int
+  departmentId Int
+  birthday     DateTime
+  results      Result[]
+  class        Class      @relation("ClassStudents", fields: [classId], references: [id], onDelete: Cascade)
+  department   Department @relation(fields: [departmentId], references: [id])
+}
+
+model Teacher {
+  id        String    @id @default(cuid())
+  username  String    @unique
+  name      String
+  surname   String
+  email     String?   @unique
+  phone     String?   @unique
+  address   String
+  img       String?
+  sex       UserSex
+  createdAt DateTime  @default(now())
+  birthday  DateTime
+  classes   Class[]   @relation("ClassSupervisors")
+  chapters  Chapter[] @relation("TeacherChapters")
+  courses   Course[]  @relation("TeacherCourses")
+}
+
+model Department {
+  id       Int       @id @default(autoincrement())
+  // level    Int       @unique
+  name     String    @unique
+  classes  Class[]   @relation("Departmentclasses")
+  students Student[]
+}
+
+model Class {
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  capacity      Int
+  supervisorId  String?
+  departmentId  Int
+  announcements Announcement[] @relation("ClassAnnouncements")
+  department    Department     @relation("Departmentclasses", fields: [departmentId], references: [id])
+  supervisor    Teacher?       @relation("ClassSupervisors", fields: [supervisorId], references: [id])
+  events        Event[]        @relation("ClassEvents")
+  chapters      Chapter[]      @relation("ClassChapters")
+  students      Student[]      @relation("ClassStudents")
+}
+
+model Course {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  creditHour Int?
+  chapters Chapter[] @relation("CourseChapters")
+  teachers Teacher[] @relation("TeacherCourses")
+}
+
+model Chapter {
+  id          Int          @id @default(autoincrement())
+  name        String
+  day         Day
+  startTime   DateTime
+  endTime     DateTime
+  courseId    Int
+  classId     Int
+  teacherId   String
+  assignments Assignment[] @relation("ChapterAssignments")
+  exams       Exam[]       @relation("ChapterExams")
+  class       Class        @relation("ClassChapters", fields: [classId], references: [id])
+  course      Course       @relation("CourseChapters", fields: [courseId], references: [id])
+  teacher     Teacher      @relation("TeacherChapters", fields: [teacherId], references: [id])
+}
+
+model Exam {
+  id        Int      @id @default(autoincrement())
+  title     String
+  startTime DateTime
+  endTime   DateTime
+  chapterId Int
+  chapter   Chapter  @relation("ChapterExams", fields: [chapterId], references: [id])
+  //results   Result[] @relation("ExamResults")
+}
+
+model Assignment {
+  id        Int      @id @default(autoincrement())
+  title     String
+  startDate DateTime
+  dueDate   DateTime
+  chapterId Int
+  teacherId String?
+  chapter   Chapter  @relation("ChapterAssignments", fields: [chapterId], references: [id])
+  results   Result[] @relation("AssignmentResults")
+}
+
+model Result {
+  id           Int         @id @default(autoincrement())
+  score        Int
+  examId       Int?
+  assignmentId Int?
+  studentId    String
+  courseName   String?
+  midexam      Int?
+  assignmentRe Int?
+  creditHour   Int?
+  assignment   Assignment? @relation("AssignmentResults", fields: [assignmentId], references: [id])
+  //exam         Exam?       @relation("ExamResults", fields: [examId], references: [id])
+  student      Student     @relation(fields: [studentId], references: [id])
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  startTime   DateTime
+  endTime     DateTime
+  classId     Int?
+  class       Class?   @relation("ClassEvents", fields: [classId], references: [id])
+}
+
+model Announcement {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  date        DateTime
+  classId     Int?
+  class       Class?   @relation("ClassAnnouncements", fields: [classId], references: [id])
+}
+
+enum UserSex {
+  MALE
+  FEMALE
+}
+
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}

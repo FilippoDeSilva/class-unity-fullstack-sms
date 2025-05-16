@@ -455,7 +455,7 @@ const ResultListPage = async ({
   // Add role-based conditions
   if (role === "teacher") {
     orConditions.push(
-      { exam: { chapter: { teacherId: currentUserId! } } },
+      // { exam: { chapter: { teacherId: currentUserId! } } },
       { assignment: { chapter: { teacherId: currentUserId! } } }
     );
   } else if (role === "student") {

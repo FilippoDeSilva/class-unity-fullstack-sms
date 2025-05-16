@@ -121,7 +121,8 @@ import axios from "axios";
 const ResultTable = () => {
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { id } = useParams(); // Get the id from the URL
+  const params = useParams() as { id?: string }; // Type-safe assertion
+  const id = params?.id;
   const [cgpa, setCgpa] = useState<number | null>(null);
 
   useEffect(() => {

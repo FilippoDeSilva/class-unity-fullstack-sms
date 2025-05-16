@@ -117,6 +117,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
+type ResultsTableProps = {
+  studentId: string;
+};
 
 const ResultTable = () => {
   const [results, setResults] = useState<any[]>([]);

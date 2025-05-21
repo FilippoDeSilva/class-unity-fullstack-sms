@@ -117,11 +117,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
+import ResultsTable from "@components/ResultsTable"
 type ResultsTableProps = {
   studentId: string;
 };
 
-const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
+export default function ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const params = useParams() as { id?: string }; // Type-safe assertion

@@ -167,7 +167,8 @@ import axios from "axios";
 const Performance = () => {
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { id } = useParams(); // Get the id from the URL
+  const params = useParams();
+  const id = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : undefined; // Get the id from the URL
   const [cgpa, setCgpa] = useState<number | null>(null);
 
   useEffect(() => {
@@ -270,6 +271,7 @@ const Performance = () => {
   // Recalculate CGPA whenever results change
   useEffect(() => {
     calculateCGPA();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [results]);
 
   // Prepare chart data once CGPA is calculated

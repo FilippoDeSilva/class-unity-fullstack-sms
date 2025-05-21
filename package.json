@@ -12,7 +12,7 @@
     "prisma:studio": "prisma studio"
   },
   "dependencies": {
-    "@clerk/elements": "^0.15.9", 
+    "@clerk/elements": "^0.15.9",
     "@clerk/nextjs": "^5.7.5",
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",
@@ -25,6 +25,7 @@
     "@stream-io/stream-chat-css": "^5.1.1",
     "@types/react-big-calendar": "^1.8.9",
     "axios": "^1.7.7",
+    "class-unity-school-management-system": "file:",
     "convex": "^1.16.4",
     "emoji-mart": "^5.6.0",
     "moment": "^2.30.1",

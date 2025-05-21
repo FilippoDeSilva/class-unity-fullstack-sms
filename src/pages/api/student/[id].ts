@@ -1,16 +1,18 @@
 // pages/api/student/[id].ts
 
 import { PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
+  const studentId = Array.isArray(id) ? id[0] : id;
 
   try {
     // Fetch the student's results from the database by studentId
     const results = await prisma.result.findMany({
-      where: { studentId: id },
+      where: { studentId },
       select: {
         courseName: true,
         score: true,

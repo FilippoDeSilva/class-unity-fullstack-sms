@@ -20,12 +20,12 @@
 //   }
 // }
 
-
 import { PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     // Fetch all courses with name and creditHour
     const courses = await prisma.course.findMany({

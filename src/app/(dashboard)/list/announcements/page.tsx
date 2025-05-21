@@ -99,20 +99,21 @@ const AnnouncementListPage = async ({
 
   // ROLE CONDITIONS
   if (role !== "admin") {
-    const roleConditions: { [key: string]: Prisma.ClassWhereInput } = {
-      teacher: {
-        chapters: { some: { teacherId: currentUserId! } }
-      },
-      student: {
-        students: { some: { id: currentUserId! } }
-      }
-    };
-
-    const roleCondition = roleConditions[role as keyof typeof roleConditions];
-    if (roleCondition) {
+    if (role === "teacher") {
+      // Find all class IDs where the teacher is assigned to a chapter
+      const teacherChapters: { classId: number }[] = await prisma.chapter.findMany({
+        where: { teacherId: currentUserId! },
+        select: { classId: true },
+      });
+      const classIds: number[] = Array.from(new Set(teacherChapters.map((c) => c.classId)));
       query.OR = [
         { classId: null }, // Global announcements
-        { class: roleCondition } // Class-specific announcements based on role
+        ...(classIds.length > 0 ? [{ classId: { in: classIds } }] : [])
+      ];
+    } else if (role === "student") {
+      query.OR = [
+        { classId: null },
+        { class: { students: { some: { id: currentUserId! } } } },
       ];
     }
   }

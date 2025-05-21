@@ -112,15 +112,26 @@
 // export default ResultTable;
 
 
-"use client";
+'use client';
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 
+interface Result {
+  id: string;
+  courseName: string;
+  score: number;
+  midexam: number;
+  assignmentRe: number;
+  creditHour: number;
+}
+
 const ResultTable: React.FC = () => {
-  const { id: studentId } = useParams() as { id: string };
-  const [results, setResults] = useState<any[]>([]);
+  const params = useParams();
+  const studentId = (params as { id: string }).id;
+
+  const [results, setResults] = useState<Result[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [cgpa, setCgpa] = useState<number | null>(null);
 

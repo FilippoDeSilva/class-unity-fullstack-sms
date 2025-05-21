@@ -117,25 +117,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import ResultsTable from "@components/ResultsTable"
-type ResultsTableProps = {
-  studentId: string;
-};
 
-const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
+const ResultTable: React.FC = () => {
+  const { id: studentId } = useParams() as { id: string };
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const params = useParams() as { id?: string }; // Type-safe assertion
-  const id = params?.id;
   const [cgpa, setCgpa] = useState<number | null>(null);
 
   useEffect(() => {
-    if (id) {
+    if (studentId) {
       const fetchResults = async () => {
         try {
-          const response = await axios.get(`/api/student/${id}`); // Fetch data with Axios
-          setResults(response.data); // Update state with fetched data
-          setError(null); // Clear any previous errors
+          const response = await axios.get(`/api/student/${studentId}`);
+          setResults(response.data);
+          setError(null);
         } catch (error: any) {
           console.error("Error fetching results:", error);
           setError(error.response?.data?.error || "Failed to fetch results.");
@@ -144,12 +139,10 @@ const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
 
       fetchResults();
     }
-  }, [id]); // Refetch when id changes
+  }, [studentId]);
 
   const calculateTotalScore = (score: number, midExam: number, assignmentRe: number) => {
-    if (score == null || midExam == null || assignmentRe == null) {
-      return null;
-    }
+    if (score == null || midExam == null || assignmentRe == null) return null;
     return score + midExam + assignmentRe;
   };
 
@@ -168,7 +161,6 @@ const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
     return "F";
   };
 
-  // Grade to Grade Point mapping
   const gradeToGP = (grade: string) => {
     switch (grade) {
       case "A+":
@@ -193,23 +185,17 @@ const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
       case "F":
         return 0.0;
       default:
-        return 0.0; // For NG or any undefined grades
+        return 0.0;
     }
   };
 
-  // Calculate CGPA based on grade points and credit hours
   const calculateCGPA = () => {
     let totalGradePoints = 0;
     let totalCreditHours = 0;
 
     results.forEach((result) => {
-      const totalScoreForCourse = calculateTotalScore(
-        result.score,
-        result.midexam,
-        result.assignmentRe
-      );
-
-      const grade = calculateGrade(totalScoreForCourse);
+      const totalScore = calculateTotalScore(result.score, result.midexam, result.assignmentRe);
+      const grade = calculateGrade(totalScore);
       const gradePoint = gradeToGP(grade);
 
       if (result.creditHour) {
@@ -219,14 +205,12 @@ const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
     });
 
     if (totalCreditHours > 0) {
-      const cgpaValue = totalGradePoints / totalCreditHours;
-      setCgpa(cgpaValue);
+      setCgpa(totalGradePoints / totalCreditHours);
     } else {
       setCgpa(null);
     }
   };
 
-  // Recalculate CGPA whenever results change
   useEffect(() => {
     calculateCGPA();
   }, [results]);
@@ -234,6 +218,7 @@ const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white shadow-lg rounded-lg">
       <h1 className="text-3xl font-semibold text-center mb-6 text-gray-800">Student Results</h1>
+
       {error && (
         <p className="text-center text-red-500 mb-4">
           {error}
@@ -241,7 +226,9 @@ const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
       )}
 
       <div className="mb-6 text-center">
-        <h2 className="text-xl font-semibold text-gray-700">CGPA: {cgpa !== null ? cgpa.toFixed(2) : "N/A"}</h2>
+        <h2 className="text-xl font-semibold text-gray-700">
+          CGPA: {cgpa !== null ? cgpa.toFixed(2) : "N/A"}
+        </h2>
       </div>
 
       <table className="min-w-full table-auto bg-white border-separate border-spacing-0 shadow-md rounded-lg">

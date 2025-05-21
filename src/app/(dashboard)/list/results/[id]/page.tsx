@@ -122,7 +122,7 @@ type ResultsTableProps = {
   studentId: string;
 };
 
-export default function ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
+const ResultTable: React.FC<ResultsTableProps> = ({ studentId }) => {
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const params = useParams() as { id?: string }; // Type-safe assertion

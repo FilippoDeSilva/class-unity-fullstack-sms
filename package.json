@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push",
-    "prisma:studio": "prisma studio"
-  },
+  "dev": "next dev",
+  "build": "prisma generate && next build",
+  "start": "next start",
+  "lint": "next lint",
+  "prisma:generate": "prisma generate",
+  "prisma:push": "prisma db push",
+  "prisma:studio": "prisma studio"
+},
   "dependencies": {
     "@clerk/elements": "^0.15.9",
     "@clerk/nextjs": "^5.7.5",

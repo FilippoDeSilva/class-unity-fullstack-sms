@@ -76,12 +76,12 @@ const Menu = () => {
           //   <span className="hidden lg:block font-bold">Class-Unity</span>
           // </Link>
           //     },
-              {
-                icon:"/cpu-logo.jpg",
-                label:"Cpu College",
-                href:"https://lms.cpucollege.edu.et/",
-                visible:  ["admin", "teacher", "student", "parent"],
-              },
+              // {
+              //   icon:"/cpu-logo.jpg",
+              //   label:"Cpu College",
+              //   href:"https://lms.cpucollege.edu.et/",
+              //   visible:  ["admin", "teacher", "student", "parent"],
+              // },
               {
                 icon: "/home.png",
                 label: "Dashboard",

@@ -2,7 +2,7 @@
   "name": "class-unity-school-management-system",
   "version": "0.1.0",
   "private": true,
- "scripts": {
+  "scripts": {
   "dev": "next dev",
   "build": "prisma generate && prisma migrate deploy && next build",
   "prepare": "prisma generate",
